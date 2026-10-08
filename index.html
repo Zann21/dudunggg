@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+    <title>Happy Birthday Sayangku ♡</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="dudung.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="viewport-container" id="app">
+        <!-- Ambient glowing backgrounds and floating particles -->
+        <div class="ambient-bg" id="ambient-container">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="noise-overlay"></div>
+        </div>
+        <!-- Floating Music Button (appears after password) -->
+        <button class="music-btn" id="musicBtn" title="Play / Pause Musik">♫</button>
+        <!-- Hidden Background Audio (User fallback with Web Audio synthesizer melody if file not found) -->
+        <audio id="bgAudio" loop="" preload="auto">
+            <source src="assets/music/ssstik.io_1791384265795.mp3" type="audio/mpeg"/>
+        </audio>
+        <!-- ========================================================
+             SCENE -1: OPENING PASSWORD
+             ======================================================== -->
+        <section class="scene active" id="scene-password">
+            <div class="pw-card" id="pwCard">
+                <!-- Cute Capybara Mascot -->
+                <div class="pw-capy-container">
+                    <svg fill="none" height="74" viewbox="0 0 100 86" width="86" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Capybara Body -->
+                        <ellipse cx="50" cy="48" fill="#8d5f48" rx="34" ry="26"></ellipse>
+                        <ellipse cx="64" cy="38" fill="#9b6a52" rx="22" ry="19"></ellipse>
+                        <!-- Snout -->
+                        <path d="M72 36C78 37 83 41 82 46C81 50 74 53 66 52L64 36H72Z" fill="#754b37"></path>
+                        <ellipse cx="78" cy="42" fill="#321e14" rx="2" ry="3"></ellipse>
+                        <!-- Nose & Mouth -->
+                        <circle cx="81" cy="44" fill="#20110a" r="1.5"></circle>
+                        <!-- Cute Eye -->
+                        <ellipse cx="64" cy="32" fill="#20110a" rx="3" ry="2"></ellipse>
+                        <circle cx="65" cy="31.2" fill="#ffffff" r="1"></circle>
+                        <!-- Cute Blush -->
+                        <ellipse cx="66" cy="40" fill="#ea7a98" opacity="0.6" rx="4" ry="2.5"></ellipse>
+                        <!-- Little Ear -->
+                        <ellipse cx="52" cy="23" fill="#754b37" rx="4" ry="5.5"></ellipse>
+                        <!-- Little party hat -->
+                        <polygon fill="#d896a8" points="56,12 48,25 64,25"></polygon>
+                        <circle cx="56" cy="11" fill="#fdf0ed" r="2.5"></circle>
+                        <!-- Tiny heart float -->
+                        <path d="M30 18 C28 14 22 14 20 18 C18 14 12 14 10 18 C10 24 20 30 20 30 C20 30 30 24 30 18 Z" fill="#ea7a98" opacity="0.75"></path>
+                    </svg>
+                </div>
+                <span class="sub-eyebrow">✦ SPECIAL SURPRISE ✦</span>
+                <h1 class="serif-title" style="font-size: 26px; margin: 4px 0 6px 0;">Hi, you... ♡</h1>
+                <p style="font-size: 13px; color: var(--cream-dim); margin-bottom: 6px;">Ada sesuatu nihh buatt kamuu hihiii</p>
+                <p style="font-size: 11px; color: var(--dusty-pink); letter-spacing: 0.05em;">Masukkan kodenya masaaa iyaasihhh gatauu🙄</p>
+                <!-- Pin Dots -->
+                <div class="pin-display">
+                    <div class="pin-dot" id="dot0"></div>
+                    <div class="pin-dot" id="dot1"></div>
+                    <div class="pin-dot" id="dot2"></div>
+                    <div class="pin-dot" id="dot3"></div>
+                </div>
+                <!-- Numeric Keypad -->
+                <div class="pin-keypad">
+                    <button class="key-btn" data-key="1">1</button>
+                    <button class="key-btn" data-key="2">2</button>
+                    <button class="key-btn" data-key="3">3</button>
+                    <button class="key-btn" data-key="4">4</button>
+                    <button class="key-btn" data-key="5">5</button>
+                    <button class="key-btn" data-key="6">6</button>
+                    <button class="key-btn" data-key="7">7</button>
+                    <button class="key-btn" data-key="8">8</button>
+                    <button class="key-btn" data-key="9">9</button>
+                    <button class="key-btn action-btn" id="keyClear">CLEAR</button>
+                    <button class="key-btn" data-key="0">0</button>
+                    <button class="key-btn action-btn" id="keyEnter" style="color: var(--rose-pink); font-weight: 700;">ENTER</button>
+                </div>
+            </div>
+        </section>
+        <div class="pw-error-modal" id="pwErrorModal">
+            <div class="pw-error-card">
+                <!-- Maskot Capybara Bingung / Imut -->
+                <div class="pw-error-mascot">
+                    <svg fill="none" height="84" viewbox="0 0 100 86" width="94" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Capybara Body -->
+                        <ellipse cx="50" cy="50" fill="#8d5f48" rx="34" ry="26"></ellipse>
+                        <ellipse cx="64" cy="40" fill="#9b6a52" rx="22" ry="19"></ellipse>
+                        <!-- Snout -->
+                        <path d="M72 38C78 39 83 43 82 48C81 52 74 55 66 54L64 38H72Z" fill="#754b37"></path>
+                        <ellipse cx="78" cy="44" fill="#321e14" rx="2" ry="3"></ellipse>
+                        <!-- Slightly sad / pouty mouth -->
+                        <path d="M78 48 Q76 46 73 48" fill="transparent" stroke="#20110a" stroke-linecap="round" stroke-width="1.6"></path>
+                        <!-- Puzzled / teary Eyes -->
+                        <ellipse cx="63" cy="34" fill="#20110a" rx="2.8" ry="3.2"></ellipse>
+                        <circle cx="64" cy="33" fill="#ffffff" r="1.1"></circle>
+                        <!-- Little sad sweatdrop / tear -->
+                        <path d="M70 29 C70 29 72.5 32 72.5 33.5 C72.5 34.8 71.4 35.8 70 35.8 C68.6 35.8 67.5 34.8 67.5 33.5 C67.5 32 70 29 70 29 Z" fill="#7ed6df" opacity="0.85"></path>
+                        <!-- Blushing cheeks -->
+                        <ellipse cx="66" cy="42" fill="#ea7a98" opacity="0.75" rx="4.5" ry="3"></ellipse>
+                        <!-- Little Ear drooping -->
+                        <ellipse cx="52" cy="27" fill="#754b37" rx="4.5" ry="5.5" transform="rotate(-10 52 27)"></ellipse>
+                        <!-- Floating cute question marks -->
+                        <g fill="#ea7a98" font-family="'Caveat', cursive, sans-serif" font-size="18" font-weight="bold">
+                            <text transform="rotate(-12 28 26)" x="24" y="28">?</text>
+                            <text opacity="0.75" transform="rotate(15 38 16)" x="34" y="18">?</text>
+                        </g>
+                    </svg>
+                </div>
+                <h3 class="pw-error-title">Ups, Kodenya Kurang Tepat! 🥺</h3>
+                <p class="pw-error-desc">Coba ingat-ingat lagi tanggal lahir atau tanggal spesialmu, yaa ♡</p>
+                <div class="pw-error-hint-pill">
+                    <span>Hint: Isss, gituu aja gatauu tanggal lahirmuuu, btw PIBESDEYYYY DUDUNGG🎂</span>
+                </div>
+                <button class="btn-romantic btn-retry" id="btnRetryPin" type="button">
+                    <span>Coba Lagi</span> ♡
+                </button>
+            </div>
+        </div>
+        <!-- ========================================================
+             SCENE 0: COUNTDOWN
+             ======================================================== -->
+        <section class="scene" id="scene-countdown">
+            <!-- Capybara with Calendar mascot -->
+            <div style="margin-bottom: 8px;">
+                <svg fill="none" height="64" viewbox="0 0 100 86" width="74">
+                    <ellipse cx="50" cy="50" fill="#8d5f48" rx="32" ry="24"></ellipse>
+                    <ellipse cx="64" cy="40" fill="#9b6a52" rx="20" ry="17"></ellipse>
+                    <path d="M72 38C76 39 80 42 79 46C78 49 73 52 66 51L64 38H72Z" fill="#754b37"></path>
+                    <ellipse cx="63" cy="34" fill="#20110a" rx="2.5" ry="2"></ellipse>
+                    <!-- Calendar held in paws -->
+                    <rect fill="#fdf2ea" height="20" rx="3" stroke="#d896a8" stroke-width="1.5" width="22" x="25" y="44"></rect>
+                    <rect fill="#d896a8" height="6" rx="2" width="22" x="25" y="44"></rect>
+                    <circle cx="36" cy="57" fill="#ea7a98" r="3"></circle>
+                    <circle cx="53" cy="27" fill="#754b37" r="3"></circle>
+                </svg>
+            </div>
+            <div class="cd-title-box">
+                <span class="sub-eyebrow">✦ MENGHITUNG DETIK ✦</span>
+                <h2 class="cd-title-large">Her Special Day</h2>
+                <div class="cd-title-italic">is Coming</div>
+                <p class="cd-subtext">Maaf yaaa cuma bisa gini dulu, TUNGGUUU AKU BALIKK ♡</p>
+            </div>
+            <!-- Real Countdown Boxes -->
+            <div class="countdown-grid" id="countdownGrid">
+                <div class="countdown-card">
+                    <span class="countdown-num" id="cdDays">00</span>
+                    <span class="countdown-lbl">HARI</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-num" id="cdHours">00</span>
+                    <span class="countdown-lbl">JAM</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-num" id="cdMinutes">00</span>
+                    <span class="countdown-lbl">MENIT</span>
+                </div>
+                <div class="countdown-card">
+                    <span class="countdown-num" id="cdSeconds">00</span>
+                    <span class="countdown-lbl">DETIK</span>
+                </div>
+            </div>
+            <div class="cd-special-pill">✦ Hari ini adalah hari spesial kamu! ✦</div>
+            <!-- Action Button after countdown reached 00 or triggered -->
+            <div class="cd-btn-wrapper" id="cdBtnWrapper">
+                <button class="btn-romantic" id="btnOpenHerGift">
+                    <span>OPEN HER GIFT</span> ✦
+                </button>
+            </div>
+        </section>
+        <!-- ========================================================
+             SCENE 1: GIFT / KADO
+             ======================================================== -->
+        <section class="scene" id="scene-gift">
+            <span class="sub-eyebrow">✦ ADA SESUATU UNTUKMU ✦</span>
+            <h2 class="serif-title" style="font-size: 30px; margin: 6px 0 14px 0;">A Little Surprise</h2>
+            <!-- Interactive Gift Box with Capybara -->
+            <div class="gift-stage" id="giftBoxTrigger" title="Ketuk untuk membuka kado!">
+                <div class="gift-glow-burst" id="giftGlow"></div>
+                <div class="gift-svg-wrapper" id="giftSvgWrapper">
+                    <svg fill="none" height="180" viewbox="0 0 200 200" width="180">
+                        <!-- Sparkles / stars around -->
+                        <path d="M30 60L33 67L40 70L33 73L30 80L27 73L20 70L27 67Z" fill="#ffd4e0" opacity="0.8"></path>
+                        <path d="M170 80L172 85L177 87L172 89L170 94L168 89L163 87L168 85Z" fill="#ffd4e0" opacity="0.8"></path>
+                        <!-- Cute Capybara peeking next to box -->
+                        <g id="capyBesideGift">
+                            <ellipse cx="44" cy="140" fill="#8d5f48" rx="20" ry="18"></ellipse>
+                            <ellipse cx="52" cy="128" fill="#9b6a52" rx="14" ry="12"></ellipse>
+                            <ellipse cx="52" cy="124" fill="#1f1109" rx="2" ry="1.5"></ellipse>
+                            <ellipse cx="54" cy="130" fill="#ea7a98" opacity="0.7" rx="3" ry="2"></ellipse>
+                            <ellipse cx="45" cy="118" fill="#754b37" rx="2.5" ry="3.5"></ellipse>
+                            <!-- Paw resting on box -->
+                            <ellipse cx="62" cy="142" fill="#754b37" rx="5" ry="4"></ellipse>
+                        </g>
+                        <!-- Box Bottom -->
+                        <rect fill="#4a2752" height="75" rx="8" stroke="#d896a8" stroke-width="2" width="104" x="58" y="105"></rect>
+                        <rect fill="#ea7a98" height="75" width="14" x="103" y="105"></rect>
+                        <!-- Box Lid (animated launch) -->
+                        <g class="gift-lid-group" id="giftLid">
+                            <rect fill="#5a3163" height="22" rx="5" stroke="#d896a8" stroke-width="2" width="116" x="52" y="88"></rect>
+                            <rect fill="#ea7a98" height="22" width="14" x="103" y="88"></rect>
+                            <!-- Ribbon Bow -->
+                            <path d="M110 88 C98 68 82 72 90 85 C96 90 106 88 110 88 Z" fill="#ea7a98" stroke="#f6abc0" stroke-width="1.5"></path>
+                            <path d="M110 88 C122 68 138 72 130 85 C124 90 114 88 110 88 Z" fill="#ea7a98" stroke="#f6abc0" stroke-width="1.5"></path>
+                            <circle cx="110" cy="87" fill="#fdf2ea" r="4.5"></circle>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <p class="gift-tap-hint" id="giftTapHint">✨ Klik untuk membuka hadiah ✨</p>
+            <div class="gift-success-text" id="giftSuccessText">
+                OPEN YOUR GIFT ♡
+            </div>
+            <div class="gift-next-btn-wrap" id="giftNextBtnWrap">
+                <button class="btn-romantic" id="btnGiftNext">
+                    <span>OPEN</span> ♡
+                </button>
+            </div>
+        </section>
+        <!-- ========================================================
+             SCENE 2: SPECIAL DAY OPENING
+             ======================================================== -->
+        <section class="scene" id="scene-opening">
+            <!-- Decorative Polaroid Frames Floating -->
+            <div class="polaroid-float polaroid-float-left">
+                <img alt="Special memory 1" src="assets/gambar/images (9).jpg"/>
+            </div>
+            <div class="polaroid-float polaroid-float-right">
+                <img alt="Special memory 2" src="assets/gambar/imuttt.jpeg"/>
+            </div>
+            <div class="special-day-hero">
+                <!-- Cute Capybara Mascot -->
+                <div style="margin-bottom: 12px;">
+                    <svg fill="none" height="60" viewbox="0 0 100 86" width="68">
+                        <ellipse cx="50" cy="48" fill="#8d5f48" rx="34" ry="26"></ellipse>
+                        <ellipse cx="64" cy="38" fill="#9b6a52" rx="22" ry="19"></ellipse>
+                        <ellipse cx="64" cy="32" fill="#20110a" rx="3" ry="2"></ellipse>
+                        <circle cx="65" cy="31.2" fill="#ffffff" r="1"></circle>
+                        <ellipse cx="66" cy="40" fill="#ea7a98" opacity="0.6" rx="4" ry="2.5"></ellipse>
+                        <!-- Flower in head -->
+                        <circle cx="58" cy="22" fill="#ea7a98" r="4"></circle>
+                        <circle cx="58" cy="22" fill="#fdf0ed" r="1.5"></circle>
+                    </svg>
+                </div>
+                <span class="special-badge">✦ A LOVE LETTER FOR YOU ✦</span>
+                <h1 class="special-main-title">
+                    Your
+                    <span>Special Day</span>
+                </h1>
+                <p class="special-tagline">
+                    Dibikinn pakee hati &amp; tulusss,<br/>just for you today ♡
+                </p>
+                <button class="btn-romantic" id="btnReadLetter">
+                    <span>READ MY LETTER</span> ♡
+                </button>
+            </div>
+        </section>
+        <!-- ========================================================
+             SCENE 3: BIRTHDAY LETTER (TYPEWRITER & AUTOSCROLL)
+             ======================================================== -->
+        <section class="scene" id="scene-letter">
+            <div class="letter-header">
+                <span class="sub-eyebrow">✦ FROM MY HEART TO YOURS ✦</span>
+                <h2 class="serif-title">Happy Birthday</h2>
+            </div>
+            <div class="letter-card-wrapper">
+                <!-- Cute Capybara Sitting on letter corner -->
+                <div class="letter-mascot-corner">
+                    <svg fill="none" height="56" viewbox="0 0 80 80" width="56">
+                        <ellipse cx="40" cy="48" fill="#8d5f48" rx="24" ry="20"></ellipse>
+                        <ellipse cx="52" cy="38" fill="#9b6a52" rx="16" ry="14"></ellipse>
+                        <ellipse cx="52" cy="34" fill="#20110a" rx="2" ry="1.5"></ellipse>
+                        <ellipse cx="54" cy="40" fill="#ea7a98" opacity="0.65" rx="3" ry="2"></ellipse>
+                        <!-- Cute love letter held in paw -->
+                        <rect fill="#fdf2ea" height="13" rx="2" stroke="#d896a8" width="18" x="22" y="42"></rect>
+                        <path d="M22 43 L31 50 L40 43" stroke="#d896a8" stroke-width="1.2"></path>
+                    </svg>
+                </div>
+                <!-- Scrollable Letter Card with typewriter effect -->
+                <div class="letter-card" id="letterCard">
+                    <div class="letter-salutation">HAPPY BIRTHDAY SAYANGKUUU ♡</div>
+                    <div class="letter-body" id="letterBody"></div><span class="typing-cursor" id="typingCursor"></span>
+                </div>
+            </div>
+            <div class="letter-next-wrap" id="letterNextWrap">
+                <button class="btn-romantic" id="btnLetterNext">
+                    <span>NEXT</span> ♡
+                </button>
+            </div>
+        </section>
+        <!-- ========================================================
+             SCENE 4: OUR MEMORIES / SCRAPBOOK GALLERY
+             ======================================================== -->
+        <section class="scene" id="scene-memories">
+            <div class="memories-header">
+                <!-- Cute Capybara holding camera -->
+                <div style="margin-bottom: 6px;">
+                    <svg fill="none" height="52" viewbox="0 0 100 86" width="60">
+                        <ellipse cx="50" cy="48" fill="#8d5f48" rx="32" ry="24"></ellipse>
+                        <ellipse cx="64" cy="38" fill="#9b6a52" rx="20" ry="17"></ellipse>
+                        <ellipse cx="64" cy="32" fill="#20110a" rx="2.5" ry="2"></ellipse>
+                        <!-- Camera -->
+                        <rect fill="#2d1a33" height="20" rx="3" stroke="#d896a8" stroke-width="1.5" width="26" x="36" y="40"></rect>
+                        <circle cx="49" cy="50" fill="#d896a8" r="5"></circle>
+                        <circle cx="56" cy="44" fill="#ea7a98" r="1.5"></circle>
+                    </svg>
+                </div>
+                <span class="sub-eyebrow">✦ CAPYBARA MEMORY SCRAPBOOK ✦</span>
+                <h2 class="serif-title">Our Memories</h2>
+                <p>✦ every moment captured in love ✦</p>
+            </div>
+            <!-- Polaroid Scrapbook Grid -->
+            <div class="scrapbook-grid" id="scrapbookGrid">
+                <!-- Item 1 -->
+                <div class="polaroid-item polaroid-1" data-caption="Demi apaaa cakepp ginii? lupp lupp dehh ♡" data-img="assets/gambar/cakep.jpeg">
+                    <div class="tape-strip"></div>
+                    <div class="polaroid-img-box">
+                        <img alt="Memory 1" loading="lazy" src="assets/gambar/golden_hour.jpeg"/>
+                    </div>
+                    <div class="polaroid-caption">Senyuman ternyaman ♡</div>
+                </div>
+                <!-- Item 2 -->
+                <div class="polaroid-item polaroid-2" data-caption="Every golden sunset is sweeter with you ✨" data-img="assets/gambar/youu.jpeg">
+                    <div class="tape-strip"></div>
+                    <div class="polaroid-img-box">
+                        <img alt="Memory 2" loading="lazy" src="assets/gambar/senyuman.jpeg"/>
+                    </div>
+                    <div class="polaroid-caption">Golden hours ✨</div>
+                </div>
+                <!-- Item 3 -->
+                <div class="polaroid-item polaroid-3" data-caption="Maniss bangett gilakkk🌷" data-img="assets/gambar/manis.jpeg">
+                    <div class="tape-strip"></div>
+                    <div class="polaroid-img-box">
+                        <img alt="Memory 3" loading="lazy" src="assets/gambar/deymm.jpeg"/>
+                    </div>
+                    <div class="polaroid-caption">Tawa manismu 🌷</div>
+                </div>
+                <!-- Item 4 -->
+                <div class="polaroid-item polaroid-4" data-caption="Seriuss nihh sendirii ajaa? gamau bareng aku? ☕" data-img="assets/gambar/kafe.jpeg">
+                    <div class="tape-strip"></div>
+                    <div class="polaroid-img-box">
+                        <img alt="Memory 4" loading="lazy" src="assets/gambar/ebdless.jpeg"/>
+                    </div>
+                    <div class="polaroid-caption">Endless stories ☕</div>
+                </div>
+                <!-- Item 5 (Centerpiece) -->
+                <div class="polaroid-item polaroid-5" data-caption="Tetap bareng kannn, ya dudunggg? ♡" data-img="assets/gambar/dudung.jpeg">
+                    <div class="tape-strip"></div>
+                    <div class="polaroid-img-box">
+                        <img alt="Memory 5" loading="lazy" src="assets/gambar/lucuuu.jpeg"/>
+                    </div>
+                    <div class="polaroid-caption">Forever with you ♡</div>
+                </div>
+            </div>
+            <div class="memories-footer-msg">
+                I love you more than words can say. Happy Birthday! 🐾🎂
+            </div>
+        </section>
+        <!-- ========================================================
+             LIGHTBOX MODAL FOR PHOTO ZOOM
+             ======================================================== -->
+        <div class="lightbox-modal" id="lightboxModal">
+            <div class="lightbox-content" id="lightboxContent">
+                <button class="lightbox-close-btn" id="lightboxCloseBtn">✕</button>
+                <div class="lightbox-img-box">
+                    <img alt="Enlarged Memory" id="lightboxImg" src=""/>
+                </div>
+                <div class="lightbox-caption" id="lightboxCaption"></div>
+            </div>
+        </div>
+    </div>
+    <script src="hbd.js"></script>
+</body>
+</html>
