@@ -387,7 +387,7 @@ function startTypewriter() {
                 letterNextWrap.classList.add('show');
             }, 450);
         }
-    }, 5);
+    }, 20);
 }
 document.getElementById('btnLetterNext').addEventListener('click', () => {
     switchScene('memories');
